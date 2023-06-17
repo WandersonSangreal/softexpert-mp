@@ -1,10 +1,17 @@
 {
-    "name": "marketplace/api",
-    "authors": [
-        {
-            "name": "Wanderson Sangreal",
-            "email": "sangreal.wanderson@hotmail.com"
-        }
-    ],
-    "require": {}
+	"name": "marketplace/api",
+	"authors": [
+		{
+			"name": "Wanderson Sangreal",
+			"email": "sangreal.wanderson@hotmail.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"App\\": "app/"
+		}
+	},
+	"require": {
+		"php": "^7.4|^8.0"
+	}
 }
