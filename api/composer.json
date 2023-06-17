@@ -1,0 +1,10 @@
+{
+    "name": "marketplace/api",
+    "authors": [
+        {
+            "name": "Wanderson Sangreal",
+            "email": "sangreal.wanderson@hotmail.com"
+        }
+    ],
+    "require": {}
+}
