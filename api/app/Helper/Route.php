@@ -14,7 +14,7 @@ class Route
 
 	}
 
-	public static function get($uri, $controller, $action = null)
+	public static function get($controller, $action = null)
 	{
 		return Route::runMethod($controller, ($action ?? 'index'));
 	}

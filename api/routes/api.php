@@ -10,14 +10,16 @@ $routes = [
 	'/product' => ProductController::class
 ];
 
+header('Content-Type: application/json; charset=utf-8');
+
 if (in_array($uri, array_keys($routes))) {
 
-	Route::$method($uri, $routes[$uri]);
+	Route::$method($routes[$uri]);
 
 } else {
 
 	header($_SERVER["SERVER_PROTOCOL"] . "/1.0 404 Not Found", true, 404);
 
-	echo "<h1>Not Found</h1>";
+	echo json_encode(['status' => 'error', 'message' => '404 - page not found']);
 
 }
