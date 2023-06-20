@@ -8,12 +8,11 @@ class ProductController
 {
 	public function index()
 	{
-		$products = new Product(['name' => 'Guitarra', 'type_id' => 1, 'price' => '3000']);
+		$products = new Product();
 
-		# $products->save();
+		$results = $products->fetchAll(['name', 'type_id', 'price']);
 
-		header('Content-Type: text/plain; charset=utf-8');
-		var_dump($products);
-		exit();
+		return json_encode($results);
+
 	}
 }

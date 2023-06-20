@@ -16,7 +16,14 @@ class Route
 
 	public static function get($controller, $action = null)
 	{
-		return Route::runMethod($controller, ($action ?? 'index'));
+		echo Route::runMethod($controller, ($action ?? 'index'));
+	}
+
+	public static function notFound()
+	{
+		header($_SERVER["SERVER_PROTOCOL"] . "/1.0 404 Not Found", true, 404);
+
+		echo json_encode(['status' => 'error', 'message' => '404 - page not found']);
 	}
 
 }

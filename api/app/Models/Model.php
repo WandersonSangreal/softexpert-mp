@@ -5,14 +5,13 @@ namespace App\Models;
 
 
 use App\Helper\Connection;
+use App\Helper\QueryBuilder;
 
 abstract class Model extends Connection
 {
-	public function __construct(array $props)
+	public function __construct()
 	{
-		foreach ($props as $key => $prop) {
-			$this->$key = $prop;
-		}
+		parent::__construct("{$_ENV['DB_CONNECTION']}:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_DATABASE']}", $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD']);
 	}
 
 	public function __get($prop)
@@ -23,6 +22,23 @@ abstract class Model extends Connection
 	public function __set($prop, $value)
 	{
 		return $this->$prop = $value;
+	}
+
+	public function create(array $props)
+	{
+		foreach ($props as $key => $prop) {
+			$this->$key = $prop;
+		}
+
+		// $query = (new QueryBuilder())->select(...array_keys($fields))->from('products');
+
+	}
+
+	public function fetchAll(array $fields)
+	{
+		$query = (new QueryBuilder())->select(...$fields)->from('products');
+
+		return $this->select($query);
 	}
 
 	public function save()

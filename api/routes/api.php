@@ -18,8 +18,6 @@ if (in_array($uri, array_keys($routes))) {
 
 } else {
 
-	header($_SERVER["SERVER_PROTOCOL"] . "/1.0 404 Not Found", true, 404);
-
-	echo json_encode(['status' => 'error', 'message' => '404 - page not found']);
+	Route::notFound();
 
 }
