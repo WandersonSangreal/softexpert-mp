@@ -35,10 +35,10 @@ class QueryBuilder
 		return $this;
 	}
 
-	public function where(string ...$where): self
+	public function where($where): self
 	{
-		foreach ($where as $arg) {
-			array_push($this->conditions, $arg);
+		foreach ($where as $key => $arg) {
+			array_push($this->conditions, $key);
 		}
 		return $this;
 	}
@@ -52,18 +52,18 @@ class QueryBuilder
 	public function dump()
 	{
 		$table = $this->table;
-		$where = $this->conditions === [] ? '' : ' WHERE ' . implode(' AND ', $this->conditions);
+		$where = $this->conditions === [] ? '' : 'WHERE ' . str_replace('=', ' = :', http_build_query(array_combine($this->conditions, $this->conditions), null, ' AND '));
 		$binds = preg_filter('/^/', ':', $this->fields);
 		$fields = implode(', ', $this->fields);
 
 		$composition = [
-			"INSERT INTO {$table} ({$fields}) VALUES (" . implode(', ', $binds) . ")",
-			"UPDATE {$table} SET " . str_replace('=', ' = :', http_build_query(array_combine($this->fields, $this->fields), null, ', ')),
-			"SELECT {$fields} FROM {$table}"
+			"INSERT INTO {$table} ({$fields}) VALUES (" . implode(', ', $binds) . ") {$where} returning *",
+			"UPDATE {$table} SET " . str_replace('=', ' = :', http_build_query(array_combine($this->fields, $this->fields), null, ', ')) . " {$where} returning *",
+			"SELECT {$fields} FROM {$table} {$where}"
 		];
 
 		if (array_key_exists($this->type, $composition)) {
-			return "{$composition[$this->type]} {$where};";
+			return "{$composition[$this->type]};";
 		}
 
 		return null;
@@ -72,24 +72,7 @@ class QueryBuilder
 
 	public function __toString()
 	{
-
-		$table = $this->table;
-		$where = $this->conditions === [] ? '' : ' WHERE ' . implode(' AND ', $this->conditions);
-		$binds = preg_filter('/^/', ':', $this->fields);
-		$fields = implode(', ', $this->fields);
-
-		$composition = [
-			"INSERT INTO {$table} ({$fields}) VALUES (" . implode(', ', $binds) . ")",
-			"UPDATE {$table} SET " . str_replace('=', ' = :', http_build_query(array_combine($this->fields, $this->fields), null, ', ')),
-			"SELECT {$fields} FROM {$table}"
-		];
-
-		if (array_key_exists($this->type, $composition)) {
-			return "{$composition[$this->type]} {$where};";
-		}
-
-		return null;
-
+		return $this->dump();
 	}
 
 }

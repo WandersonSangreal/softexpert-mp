@@ -16,6 +16,7 @@
 		"ext-pdo": "*",
 		"vlucas/phpdotenv": "^5.5",
 		"ext-json": "*",
-		"clancats/hydrahon": "^1.1"
+		"clancats/hydrahon": "^1.1",
+		"doctrine/inflector": "^2.0"
 	}
 }

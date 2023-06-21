@@ -4,34 +4,42 @@ namespace App\Helper;
 
 class Route
 {
-	private $resources = ['index', 'show', 'store', 'update', 'destroy'];
+	private static array $resources = ['get' => 'show', 'post' => 'store', 'put' => 'update', 'delete' => 'destroy'];
 
-	private static function runMethod($controller, $action)
+	private static function runMethod($controller, $action, ...$params)
 	{
 		$instance = new $controller();
 
-		return $instance->$action();
+		return $instance->$action(...$params);
 
 	}
 
-	public static function get($controller, $action = null)
+	public static function get($controller, $action = null, ...$params)
 	{
-		echo Route::runMethod($controller, ($action ?? 'index'));
+		$action = $action ?? self::$resources['get'];
+
+		echo Route::runMethod($controller, $action, ...$params);
 	}
 
-	public static function post($controller, $action = null)
+	public static function post($controller, $action = null, ...$params)
 	{
-		echo Route::runMethod($controller, ($action ?? 'store'));
+		$action = $action ?? self::$resources['post'];
+
+		echo Route::runMethod($controller, $action, ...$params);
 	}
 
-	public static function put($controller, $action = null)
+	public static function put($controller, $action = null, ...$params)
 	{
-		echo Route::runMethod($controller, ($action ?? 'update'));
+		$action = $action ?? self::$resources['put'];
+
+		echo Route::runMethod($controller, ($action ?? 'update'), ...$params);
 	}
 
-	public static function delete($controller, $action = null)
+	public static function delete($controller, $action = null, ...$params)
 	{
-		echo Route::runMethod($controller, ($action ?? 'destroy'));
+		$action = $action ?? self::$resources['delete'];
+
+		echo Route::runMethod($controller, ($action ?? 'destroy'), ...$params);
 	}
 
 	public static function notFound()

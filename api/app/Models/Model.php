@@ -6,17 +6,22 @@ namespace App\Models;
 
 use App\Helper\Connection;
 use App\Helper\QueryBuilder;
+use Doctrine\Inflector\InflectorFactory;
 use PDO;
 
 abstract class Model extends Connection
 {
 	private QueryBuilder $builder;
+	public string $table;
 
 	public function __construct()
 	{
 		parent::__construct("{$_ENV['DB_CONNECTION']}:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_DATABASE']}", $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD']);
 
+		$inflector = InflectorFactory::create()->build();
+
 		$this->builder = new QueryBuilder();
+		$this->table = $this->table ?? $inflector->pluralize(strtolower((new \ReflectionClass($this))->getShortName()));
 	}
 
 	public function create(array $props)
@@ -31,24 +36,24 @@ abstract class Model extends Connection
 
 	}
 
-	public function fetchAll(array $fields): array
+	public function fetchAll(array $fields, array $args = []): array
 	{
-		$query = $this->builder->table($this->table)->select($fields);
+		$query = $this->builder->table($this->table)->select($fields)->where($args);
 
 		$stmt = $this->connection()->prepare($query);
 
-		$stmt->execute([]);
+		$stmt->execute($args);
 
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	public function update(array $props, ...$args)
+	public function update(array $props, array $args)
 	{
-		$query = $this->builder->table($this->table)->update(array_keys($props))->where();
+		$query = $this->builder->table($this->table)->update(array_keys($props))->where($args);
 
 		$stmt = $this->connection()->prepare($query);
 
-		$stmt->execute($props);
+		$stmt->execute(array_merge($props, $args));
 
 		return $stmt->fetch(PDO::FETCH_ASSOC);
 

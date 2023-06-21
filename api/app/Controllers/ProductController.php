@@ -2,36 +2,18 @@
 
 namespace App\Controllers;
 
+use App\Models\Model;
 use App\Models\Product;
 
-class ProductController
+class ProductController extends AbstractController
 {
-	public function index()
+	public function model(): Model
 	{
-		$products = new Product();
-
-		$results = $products->fetchAll(['name', 'type_id', 'price']);
-
-		return json_encode($results);
-
+		return new Product();
 	}
 
-	public function store()
+	public function fields(): array
 	{
-		$products = new Product();
-
-		$created = $products->create(['name' => 'Teste', 'type_id' => 1, 'price' => '3000', 'description' => "Teste"]);
-
-		return json_encode($created);
+		return ['id', 'name', 'type_id', 'price', 'created_date'];
 	}
-
-	public function update()
-	{
-		$products = new Product();
-
-		$created = $products->update(['name' => 'Teste', 'type_id' => 1, 'price' => '3000', 'description' => "Teste"])->where('id', 2);
-
-		return json_encode($created);
-	}
-
 }
