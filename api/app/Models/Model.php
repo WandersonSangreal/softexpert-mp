@@ -6,44 +6,52 @@ namespace App\Models;
 
 use App\Helper\Connection;
 use App\Helper\QueryBuilder;
+use PDO;
 
 abstract class Model extends Connection
 {
+	private QueryBuilder $builder;
+
 	public function __construct()
 	{
 		parent::__construct("{$_ENV['DB_CONNECTION']}:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_DATABASE']}", $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD']);
-	}
 
-	public function __get($prop)
-	{
-		return $this->$prop;
-	}
-
-	public function __set($prop, $value)
-	{
-		return $this->$prop = $value;
+		$this->builder = new QueryBuilder();
 	}
 
 	public function create(array $props)
 	{
-		foreach ($props as $key => $prop) {
-			$this->$key = $prop;
-		}
+		$query = $this->builder->table($this->table)->insert(array_keys($props));
 
-		// $query = (new QueryBuilder())->select(...array_keys($fields))->from('products');
+		$stmt = $this->connection()->prepare($query);
+
+		$stmt->execute($props);
+
+		return $stmt->fetch(PDO::FETCH_ASSOC);
 
 	}
 
-	public function fetchAll(array $fields)
+	public function fetchAll(array $fields): array
 	{
-		$query = (new QueryBuilder())->select(...$fields)->from('products');
+		$query = $this->builder->table($this->table)->select($fields);
 
-		return $this->select($query);
+		$stmt = $this->connection()->prepare($query);
+
+		$stmt->execute([]);
+
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	public function save()
+	public function update(array $props, ...$args)
 	{
-		$this->execute();
+		$query = $this->builder->table($this->table)->update(array_keys($props))->where();
+
+		$stmt = $this->connection()->prepare($query);
+
+		$stmt->execute($props);
+
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+
 	}
 
 }

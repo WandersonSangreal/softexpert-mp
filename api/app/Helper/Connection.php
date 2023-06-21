@@ -33,13 +33,9 @@ class Connection
 		}
 	}
 
-	public function select($query, ?array $bindings = [])
+	public function connection(): PDO
 	{
-		$stmt = static::$db->prepare($query);
-
-		$stmt->execute($bindings);
-
-		return $stmt->fetch(PDO::FETCH_ASSOC);
+		return static::$db;
 	}
 
 }

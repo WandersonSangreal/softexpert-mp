@@ -19,6 +19,21 @@ class Route
 		echo Route::runMethod($controller, ($action ?? 'index'));
 	}
 
+	public static function post($controller, $action = null)
+	{
+		echo Route::runMethod($controller, ($action ?? 'store'));
+	}
+
+	public static function put($controller, $action = null)
+	{
+		echo Route::runMethod($controller, ($action ?? 'update'));
+	}
+
+	public static function delete($controller, $action = null)
+	{
+		echo Route::runMethod($controller, ($action ?? 'destroy'));
+	}
+
 	public static function notFound()
 	{
 		header($_SERVER["SERVER_PROTOCOL"] . "/1.0 404 Not Found", true, 404);

@@ -5,20 +5,33 @@ namespace App\Helper;
 
 class QueryBuilder
 {
-	private array $fields = [];
-	private array $update = [];
-	private array $conditions = [];
-	private array $from = [];
+	const INSERT_TYPE = 0;
+	const UPDATE_TYPE = 1;
+	const SELECT_TYPE = 2;
 
-	public function select(string ...$select): self
+	private array $fields = [];
+	private array $conditions = [];
+	private string $table;
+	private string $type;
+
+	public function select(array $fields): self
 	{
-		$this->fields = $select;
+		$this->type = self::SELECT_TYPE;
+		$this->fields = $fields;
 		return $this;
 	}
 
-	public function update(array $update): self
+	public function insert(array $fields): self
 	{
-		$this->update = $update;
+		$this->type = self::INSERT_TYPE;
+		$this->fields = $fields;
+		return $this;
+	}
+
+	public function update(array $fields): self
+	{
+		$this->type = self::UPDATE_TYPE;
+		$this->fields = $fields;
 		return $this;
 	}
 
@@ -30,19 +43,53 @@ class QueryBuilder
 		return $this;
 	}
 
-	public function from(string $table, ?string $alias = null): self
+	public function table(string $table): self
 	{
-		array_push($this->from, ($alias ? "${$table} AS ${alias}" : $table));
+		$this->table = $table;
 		return $this;
+	}
+
+	public function dump()
+	{
+		$table = $this->table;
+		$where = $this->conditions === [] ? '' : ' WHERE ' . implode(' AND ', $this->conditions);
+		$binds = preg_filter('/^/', ':', $this->fields);
+		$fields = implode(', ', $this->fields);
+
+		$composition = [
+			"INSERT INTO {$table} ({$fields}) VALUES (" . implode(', ', $binds) . ")",
+			"UPDATE {$table} SET " . str_replace('=', ' = :', http_build_query(array_combine($this->fields, $this->fields), null, ', ')),
+			"SELECT {$fields} FROM {$table}"
+		];
+
+		if (array_key_exists($this->type, $composition)) {
+			return "{$composition[$this->type]} {$where};";
+		}
+
+		return null;
+
 	}
 
 	public function __toString()
 	{
-		$fields = implode(', ', $this->fields);
-		$from = implode(', ', $this->from);
-		$where = $this->conditions === [] ? '' : ' WHERE ' . implode(' AND ', $this->conditions);
 
-		return "SELECT {$fields} FROM {$from} {$where};";
+		$table = $this->table;
+		$where = $this->conditions === [] ? '' : ' WHERE ' . implode(' AND ', $this->conditions);
+		$binds = preg_filter('/^/', ':', $this->fields);
+		$fields = implode(', ', $this->fields);
+
+		$composition = [
+			"INSERT INTO {$table} ({$fields}) VALUES (" . implode(', ', $binds) . ")",
+			"UPDATE {$table} SET " . str_replace('=', ' = :', http_build_query(array_combine($this->fields, $this->fields), null, ', ')),
+			"SELECT {$fields} FROM {$table}"
+		];
+
+		if (array_key_exists($this->type, $composition)) {
+			return "{$composition[$this->type]} {$where};";
+		}
+
+		return null;
+
 	}
 
 }
