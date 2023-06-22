@@ -14,7 +14,8 @@ export class HomeComponent {
 
 	public form!: FormGroup;
 	public items$!: Observable<Array<any>>;
-	public cartList: Array<number> = [];
+	public cartList: Array<any> = [];
+	public cartListIDs: Array<number> = [];
 
 	public constructor(private http: HttpClient, private cartService: CartService) {
 
@@ -23,13 +24,17 @@ export class HomeComponent {
 	public ngOnInit(): void {
 
 		this.cartList = this.cartService.lastValue;
+		this.cartListIDs = this.cartService.lastValue.map(i => i.id);
 		this.items$ = this.http.get<Array<any>>(environment.API.concat('product'));
 
 	}
 
-	public addCart(id: number): void {
+	public addCart(item: any): void {
 
-		this.cartList.push(id);
+		item.amount = 1;
+
+		this.cartList.push(item);
+		this.cartListIDs.push(item.id);
 		this.cartService.setCart(this.cartList);
 
 	}

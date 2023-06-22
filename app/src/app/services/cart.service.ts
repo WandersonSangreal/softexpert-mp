@@ -6,8 +6,8 @@ import {Observable, Subject} from "rxjs";
 })
 export class CartService {
 
-	public lastValue: Array<number> = [];
-	public cartSize$: Subject<Array<number>> = new Subject<Array<number>>();
+	public lastValue: Array<any> = [];
+	public cartSize$: Subject<Array<any>> = new Subject<Array<any>>();
 
 	public constructor() {
 
@@ -25,7 +25,7 @@ export class CartService {
 
 	}
 
-	public setCart(cartList: Array<number>) {
+	public setCart(cartList: Array<any>) {
 
 		this.lastValue = cartList;
 		this.cartSize$.next(cartList);

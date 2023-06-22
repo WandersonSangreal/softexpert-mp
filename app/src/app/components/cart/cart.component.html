@@ -1,1 +1,26 @@
-<p>cart works!</p>
+<ul class="list-group mb-3">
+	<li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let item of items">
+
+		<input type="number" class="form-control number" [(ngModel)]="item.amount" (change)="save()">
+
+		<div class="ms-2 me-auto">
+			<div class="fw-bold">{{ item.name }}</div>
+			{{ item.description }}
+		</div>
+		<span class="badge bg-primary rounded-2 mx-2">{{ (item.price * item.amount) | currency }}</span>
+		<span class="badge bg-secondary rounded-2">
+			+{{ ((item.price * item.amount) * (item.type.percentage / 100)) | currency }}
+		</span>
+	</li>
+</ul>
+
+<div class="d-flex justify-content-between">
+
+	<div>
+		<h5>Total: {{ sum() | currency }}</h5>
+	</div>
+	<div>
+		<button type="button" class="btn btn-primary text-white mb-3" (click)="requestSave()">Save</button>
+	</div>
+
+</div>
