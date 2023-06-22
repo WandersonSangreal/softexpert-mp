@@ -19,8 +19,10 @@
 					<p class="card-text">{{ item.description }}</p>
 					<div class="d-flex justify-content-between">
 						<div class="mt-2">{{ item.price | currency }}</div>
-						<a href="#" class="btn btn-link">
-							<i class="fas fa-plus"></i>
+						<a href="javascript:void(0)" class="btn btn-link" (click)="addCart(item.id)">
+							<i class="fas" [class.fa-check]="cartList.includes(item.id)"
+							   [class.text-success]="cartList.includes(item.id)"
+							   [class.fa-plus]="!cartList.includes(item.id)"></i>
 						</a>
 					</div>
 				</div>

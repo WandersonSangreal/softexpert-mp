@@ -10,7 +10,8 @@ import {TaxesComponent} from './components/taxes/taxes.component';
 import {CartComponent} from './components/cart/cart.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { HomeComponent } from './components/home/home.component';
+import {HomeComponent} from './components/home/home.component';
+import {CartService} from "./services/cart.service";
 
 @NgModule({
 	declarations: [
@@ -20,7 +21,7 @@ import { HomeComponent } from './components/home/home.component';
 		TypesComponent,
 		TaxesComponent,
 		CartComponent,
-  HomeComponent
+		HomeComponent
 	],
 	imports: [
 		BrowserModule,
@@ -29,7 +30,9 @@ import { HomeComponent } from './components/home/home.component';
 		ReactiveFormsModule,
 		HttpClientModule,
 	],
-	providers: [],
+	providers: [
+		CartService
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule {

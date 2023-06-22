@@ -35,8 +35,9 @@
 				<button type="button" class="btn btn-link me-4 rounded-pill position-relative" routerLink="/cart"
 				        routerLinkActive #mC="routerLinkActive">
 					<i class="fas fa-shopping-cart fa-lg"></i>
-					<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-						2
+					<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+					      *ngIf="cartList > 0">
+						{{ cartList }}
 						<span class="visually-hidden">unread messages</span>
 					</span>
 				</button>
