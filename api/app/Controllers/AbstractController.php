@@ -6,16 +6,34 @@ use App\Models\Product;
 
 abstract class AbstractController implements InterfaceController
 {
-	public function show($id = null)
+	public function show($id = null, $returArr = false)
 	{
 		$products = $this->model();
 		$order = method_exists($this, 'order') ? $this->order() : [];
 
 		if (!$id) {
-			return json_encode($products->fetchAll($this->fields(), [], $order));
+
+			$results = $products->fetchAll($this->fields(), [], $order);
+
+			if ($returArr) {
+
+				return $results;
+
+			}
+
+			return json_encode($results);
+
 		}
 
-		return json_encode($products->fetchAll($this->fields(), ['id' => $id]), $order);
+		$results = $products->fetchAll($this->fields(), ['id' => $id], $order);
+
+		if ($returArr) {
+
+			return $results;
+
+		}
+
+		return json_encode($results);
 	}
 
 	public function store()

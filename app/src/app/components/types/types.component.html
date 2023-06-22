@@ -19,7 +19,7 @@
 				<tr *ngFor="let item of items let i = index;">
 					<td class="text-center">{{ (i + 1) }}</td>
 					<td>{{ item.name }}</td>
-					<td>{{ item.tax_id }}</td>
+					<td>{{ item.tax.percentage }}</td>
 					<td>{{ item.created_date | date: 'short' }}</td>
 				</tr>
 				</tbody>
@@ -46,7 +46,9 @@
 						<label for="tax_id" class="form-label">Tax</label>
 						<select class="form-select" aria-label="Tax" id="tax_id" formControlName="tax_id">
 							<option selected disabled value="">Select</option>
-							<option value="1">Guitarra</option>
+							<option *ngFor="let tax of taxes$ | async" [value]="tax.id">
+								{{ tax.percentage }}
+							</option>
 						</select>
 					</div>
 

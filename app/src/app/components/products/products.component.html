@@ -20,7 +20,7 @@
 				<tr *ngFor="let item of items let i = index;">
 					<td class="text-center">{{ (i + 1) }}</td>
 					<td>{{ item.name }}</td>
-					<td>{{ item.type_id }}</td>
+					<td>{{ item.type.name }}</td>
 					<td>{{ item.price | currency }}</td>
 					<td>{{ item.created_date | date: 'short' }}</td>
 				</tr>
@@ -48,7 +48,9 @@
 						<label for="type_id" class="form-label">Type</label>
 						<select class="form-select" aria-label="Type" id="type_id" formControlName="type_id">
 							<option selected disabled value="">Select</option>
-							<option value="1">Guitarra</option>
+							<option *ngFor="let type of types$ | async" [value]="type.id">
+								{{ type.name }}
+							</option>
 						</select>
 					</div>
 					<div class="col-md-4 mb-3">

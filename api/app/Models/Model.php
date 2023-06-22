@@ -36,7 +36,7 @@ abstract class Model extends Connection
 
 	}
 
-	public function fetchAll(array $fields, array $args = [], array $order = []): array
+	public function fetchAll(array $fields, array $args = [], array $order = [], $fetch = PDO::FETCH_ASSOC): array
 	{
 		$query = $this->builder->table($this->table)->select($fields)->where($args)->order($order);
 
@@ -44,7 +44,7 @@ abstract class Model extends Connection
 
 		$stmt->execute($args);
 
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $stmt->fetchAll($fetch);
 	}
 
 	public function update(array $props, array $args)

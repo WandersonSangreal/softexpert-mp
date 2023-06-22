@@ -12,6 +12,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class ProductsComponent implements OnInit {
 
 	public form!: FormGroup;
+	public types$!: Observable<Array<any>>;
 	public items$!: Observable<Array<any>>;
 
 	public constructor(private http: HttpClient, private formBuilder: FormBuilder) {
@@ -20,6 +21,7 @@ export class ProductsComponent implements OnInit {
 
 	public ngOnInit(): void {
 
+		this.types$ = this.http.get<Array<any>>(environment.API.concat('type'));
 		this.items$ = this.http.get<Array<any>>(environment.API.concat('product'));
 
 		this.form = this.formBuilder.group({
