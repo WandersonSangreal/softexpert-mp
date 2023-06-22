@@ -10,6 +10,7 @@ import {TaxesComponent} from './components/taxes/taxes.component';
 import {CartComponent} from './components/cart/cart.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
 	declarations: [
@@ -18,7 +19,8 @@ import {HttpClientModule} from "@angular/common/http";
 		ProductsComponent,
 		TypesComponent,
 		TaxesComponent,
-		CartComponent
+		CartComponent,
+  HomeComponent
 	],
 	imports: [
 		BrowserModule,

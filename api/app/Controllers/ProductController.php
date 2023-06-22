@@ -52,7 +52,7 @@ class ProductController extends AbstractController
 
 	public function fields(): array
 	{
-		return ['id', 'name', 'type_id', 'price', 'created_date'];
+		return ['id', 'name', 'description', 'type_id', 'price', 'created_date'];
 	}
 
 	public function order(): array
