@@ -1,24 +1,76 @@
-<h4 class="text-muted">Products</h4>
+<div id="products">
 
-<br>
+	<h4 class="text-muted mb-4">Products</h4>
 
-<table class="table table-hover" *ngIf="items$ | async as items">
-	<thead>
-	<tr>
-		<th class="text-center rounded-ts">#</th>
-		<th>Name</th>
-		<th>Type</th>
-		<th>Price</th>
-		<th class="rounded-te">Created Date</th>
-	</tr>
-	</thead>
-	<tbody>
-	<tr *ngFor="let item of items let i = index;">
-		<td class="text-center">{{ (i + 1) }}</td>
-		<td>{{ item.name }}</td>
-		<td>{{ item.type_id }}</td>
-		<td>{{ item.price | currency }}</td>
-		<td>{{ item.created_date | date: 'short' }}</td>
-	</tr>
-	</tbody>
-</table>
+	<div class="row">
+
+		<div class="col">
+
+			<table class="table table-hover" *ngIf="items$ | async as items">
+				<thead>
+				<tr>
+					<th class="text-center rounded-ts">#</th>
+					<th>Name</th>
+					<th>Type</th>
+					<th>Price</th>
+					<th class="rounded-te">Created Date</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr *ngFor="let item of items let i = index;">
+					<td class="text-center">{{ (i + 1) }}</td>
+					<td>{{ item.name }}</td>
+					<td>{{ item.type_id }}</td>
+					<td>{{ item.price | currency }}</td>
+					<td>{{ item.created_date | date: 'short' }}</td>
+				</tr>
+				</tbody>
+			</table>
+
+		</div>
+
+	</div>
+
+	<div class="row">
+
+		<div class="col">
+
+			<h4 class="text-muted mb-4">Add</h4>
+
+			<form [formGroup]="form" (ngSubmit)="submit()" class="formbox rounded-2">
+
+				<fieldset class="row">
+					<div class="col-md-4 mb-3">
+						<label for="name" class="form-label">Name</label>
+						<input type="name" class="form-control" id="name" placeholder="Name" formControlName="name">
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="type_id" class="form-label">Type</label>
+						<select class="form-select" aria-label="Type" id="type_id" formControlName="type_id">
+							<option selected disabled value="">Select</option>
+							<option value="1">Guitarra</option>
+						</select>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="price" class="form-label">Price</label>
+						<input type="number" class="form-control" id="price" placeholder="0.00" formControlName="price">
+					</div>
+
+					<div class="col-mb-12 mb-4">
+						<label for="description" class="form-label">Description</label>
+						<textarea class="form-control" id="description" rows="3"
+						          formControlName="description"></textarea>
+					</div>
+
+					<div class="col-mb-12">
+						<button type="submit" class="btn btn-primary text-white mb-3">Add</button>
+					</div>
+				</fieldset>
+
+			</form>
+
+		</div>
+
+	</div>
+
+</div>

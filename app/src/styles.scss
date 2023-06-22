@@ -4,6 +4,7 @@ COLORS
 $primary: #6076de;
 $secondary: #5a5c77;
 $table-hover-bg: #fcfcfd;
+$border-color: #f3f4fb;
 
 /**
 IMPORTS
@@ -42,5 +43,10 @@ body {
 
 	.rounded-be {
 		border-bottom-right-radius: .5rem;
+	}
+
+	.formbox {
+		padding: 2rem 1rem;
+		background-color: white;
 	}
 }

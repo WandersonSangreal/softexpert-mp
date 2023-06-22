@@ -14,6 +14,6 @@ class TypeController extends AbstractController
 
 	public function fields(): array
 	{
-		return ['id', 'tax_id', 'name'];
+		return ['id', 'tax_id', 'name', 'created_date'];
 	}
 }

@@ -14,6 +14,6 @@ class TaxController extends AbstractController
 
 	public function fields(): array
 	{
-		return ['id', 'percentage'];
+		return ['id', 'percentage', 'created_date'];
 	}
 }
