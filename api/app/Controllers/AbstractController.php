@@ -9,12 +9,13 @@ abstract class AbstractController implements InterfaceController
 	public function show($id = null)
 	{
 		$products = $this->model();
+		$order = method_exists($this, 'order') ? $this->order() : [];
 
 		if (!$id) {
-			return json_encode($products->fetchAll($this->fields()));
+			return json_encode($products->fetchAll($this->fields(), [], $order));
 		}
 
-		return json_encode($products->fetchAll($this->fields(), ['id' => $id]));
+		return json_encode($products->fetchAll($this->fields(), ['id' => $id]), $order);
 	}
 
 	public function store()

@@ -11,6 +11,7 @@ class QueryBuilder
 
 	private array $fields = [];
 	private array $conditions = [];
+	private array $order = [];
 	private string $table;
 	private string $type;
 
@@ -49,17 +50,24 @@ class QueryBuilder
 		return $this;
 	}
 
+	public function order(array $order): self
+	{
+		$this->order = $order;
+		return $this;
+	}
+
 	public function dump()
 	{
 		$table = $this->table;
 		$where = $this->conditions === [] ? '' : 'WHERE ' . str_replace('=', ' = :', http_build_query(array_combine($this->conditions, $this->conditions), null, ' AND '));
+		$order = $this->order === [] ? '' : 'ORDER BY ' . str_replace('=', ' ', http_build_query($this->order, null, ', '));
 		$binds = preg_filter('/^/', ':', $this->fields);
 		$fields = implode(', ', $this->fields);
 
 		$composition = [
 			"INSERT INTO {$table} ({$fields}) VALUES (" . implode(', ', $binds) . ") {$where} returning *",
 			"UPDATE {$table} SET " . str_replace('=', ' = :', http_build_query(array_combine($this->fields, $this->fields), null, ', ')) . " {$where} returning *",
-			"SELECT {$fields} FROM {$table} {$where}"
+			"SELECT {$fields} FROM {$table} {$where} {$order}"
 		];
 
 		if (array_key_exists($this->type, $composition)) {

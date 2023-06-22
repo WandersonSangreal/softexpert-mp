@@ -36,9 +36,9 @@ abstract class Model extends Connection
 
 	}
 
-	public function fetchAll(array $fields, array $args = []): array
+	public function fetchAll(array $fields, array $args = [], array $order = []): array
 	{
-		$query = $this->builder->table($this->table)->select($fields)->where($args);
+		$query = $this->builder->table($this->table)->select($fields)->where($args)->order($order);
 
 		$stmt = $this->connection()->prepare($query);
 

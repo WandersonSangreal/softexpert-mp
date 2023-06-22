@@ -16,4 +16,9 @@ class ProductController extends AbstractController
 	{
 		return ['id', 'name', 'type_id', 'price', 'created_date'];
 	}
+
+	public function order(): array
+	{
+		return ['created_date' => 'desc'];
+	}
 }

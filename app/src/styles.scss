@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+/**
+COLORS
+ */
+$primary: #6076de;
+$secondary: #5a5c77;
+
+/**
+IMPORTS
+ */
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
+@import "node_modules/@fortawesome/fontawesome-free/scss/regular";
+@import "node_modules/@fortawesome/fontawesome-free/scss/solid";
+
+/**
+STYLES
+ */
+body {
+	background-color: #f3f4fb;
+}
