@@ -9,16 +9,21 @@
 			</a>
 
 			<ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 fw-bold">
-				<li><a href="javascript:void(0)" routerLink="/" class="nav-link px-4">
+				<li><a href="javascript:void(0)" routerLink="/" routerLinkActive #mH="routerLinkActive"
+				       [routerLinkActiveOptions]="{exact: true}"
+				       class="nav-link px-4" [class.link-secondary]="!mH.isActive">
 					Home
 				</a></li>
-				<li><a href="javascript:void(0)" routerLink="/products" class="nav-link px-4 link-secondary">
+				<li><a href="javascript:void(0)" routerLink="/products" routerLinkActive #mP="routerLinkActive"
+				       class="nav-link px-4" [class.link-secondary]="!mP.isActive">
 					Products
 				</a></li>
-				<li><a href="javascript:void(0)" routerLink="/types" class="nav-link px-4 link-secondary">
+				<li><a href="javascript:void(0)" routerLink="/types" routerLinkActive #mT="routerLinkActive"
+				       class="nav-link px-4" [class.link-secondary]="!mT.isActive">
 					Types
 				</a></li>
-				<li><a href="javascript:void(0)" routerLink="/taxes" class="nav-link px-4 link-secondary">
+				<li><a href="javascript:void(0)" routerLink="/taxes" routerLinkActive #mTX="routerLinkActive"
+				       class="nav-link px-4" [class.link-secondary]="!mTX.isActive">
 					Taxes
 				</a></li>
 			</ul>

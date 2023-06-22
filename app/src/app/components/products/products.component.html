@@ -1,0 +1,24 @@
+<h4 class="text-muted">Products</h4>
+
+<br>
+
+<table class="table table-hover" *ngIf="items$ | async as items">
+	<thead>
+	<tr>
+		<th class="text-center rounded-ts">#</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Price</th>
+		<th class="rounded-te">Created Date</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr *ngFor="let item of items let i = index;">
+		<td class="text-center">{{ (i + 1) }}</td>
+		<td>{{ item.name }}</td>
+		<td>{{ item.type_id }}</td>
+		<td>{{ item.price | currency }}</td>
+		<td>{{ item.created_date | date: 'short' }}</td>
+	</tr>
+	</tbody>
+</table>

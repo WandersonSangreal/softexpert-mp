@@ -3,24 +3,29 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { ProductsComponent } from './products/products.component';
-import { TypesComponent } from './types/types.component';
-import { TaxesComponent } from './taxes/taxes.component';
-import { CartComponent } from './cart/cart.component';
+import {HeaderComponent} from './header/header.component';
+import {ProductsComponent} from './components/products/products.component';
+import {TypesComponent} from './components/types/types.component';
+import {TaxesComponent} from './components/taxes/taxes.component';
+import {CartComponent} from './components/cart/cart.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
 	declarations: [
 		AppComponent,
-  HeaderComponent,
-  ProductsComponent,
-  TypesComponent,
-  TaxesComponent,
-  CartComponent
+		HeaderComponent,
+		ProductsComponent,
+		TypesComponent,
+		TaxesComponent,
+		CartComponent
 	],
 	imports: [
 		BrowserModule,
-		AppRoutingModule
+		AppRoutingModule,
+		FormsModule,
+		ReactiveFormsModule,
+		HttpClientModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent]

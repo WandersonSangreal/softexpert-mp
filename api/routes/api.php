@@ -22,6 +22,9 @@ $routes = [
 
 header('Content-Type: application/json; charset=utf-8');
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+
 $params = [];
 
 if (in_array($uri, array_keys($routes))) {

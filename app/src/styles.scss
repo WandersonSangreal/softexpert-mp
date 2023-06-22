@@ -3,6 +3,7 @@ COLORS
  */
 $primary: #6076de;
 $secondary: #5a5c77;
+$table-hover-bg: #fcfcfd;
 
 /**
 IMPORTS
@@ -17,4 +18,29 @@ STYLES
  */
 body {
 	background-color: #f3f4fb;
+
+	.table {
+		thead {
+			th {
+				color: white;
+				background-color: #c0c5da;
+			}
+		}
+	}
+
+	.rounded-ts {
+		border-top-left-radius: .5rem;
+	}
+
+	.rounded-te {
+		border-top-right-radius: .5rem;
+	}
+
+	.rounded-bs {
+		border-bottom-left-radius: .5rem;
+	}
+
+	.rounded-be {
+		border-bottom-right-radius: .5rem;
+	}
 }
